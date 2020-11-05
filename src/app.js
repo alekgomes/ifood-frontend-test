@@ -31,6 +31,19 @@ const App = () => {
     return axios(config);
   };
 
+  const fetchFeaturedPlaylists = () => {
+    console.log("playlists", spotifyAccessToken);
+    const config = {
+      method: "GET",
+      url: "https://api.spotify.com/v1/browse/featured-playlists",
+      headers: {
+        Authorization: `Bearer ${spotifyAccessToken}`,
+      },
+    };
+
+    axios(config).then((res) => console.log(res));
+  };
+
   console.log(spotifyAccessToken);
   return "Oi from React";
 };
