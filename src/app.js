@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import fetchSpotifyAccessToken from "./services/spotify/accessToken";
+import fetchApiFilters from "./services/ifood/apiFilters";
+
+import "./style.css";
 
 const App = () => {
   const [spotifyAccessToken, setSpotifyAccessToken] = useState("");
   const [playlists, setPlaylists] = useState([]);
+  const [filters, setFilters] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filteredByName, setFilteredByName] = useState([]);
+
+  useEffect(() => {
+    fetchApiFilters().then(({ data }) => setFilters(data.filters));
+  }, []);
 
   useEffect(() => {
     fetchSpotifyAccessToken().then(({ data }) =>
@@ -19,25 +30,13 @@ const App = () => {
     );
   }, [spotifyAccessToken]);
 
-  const fetchSpotifyAccessToken = () => {
-    const client_id = "1dc68d9df5d5462d86454ec32ba81774";
-    const client_secret = "04fc9360ff664605857ce385a4c4dea8";
-    const hash = btoa(`${client_id}:${client_secret}`);
-
-    const params = new URLSearchParams();
-    params.append("grant_type", "client_credentials");
-
-    const config = {
-      method: "POST",
-      url: "https://accounts.spotify.com/api/token",
-      headers: {
-        Authorization: `Basic ${hash}`,
-      },
-      data: params,
-    };
-
-    return axios(config);
-  };
+  useEffect(() => {
+    setFilteredByName(
+      playlists.filter(playlist =>
+        playlist.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, playlists]);
 
   const fetchFeaturedPlaylists = (uri = "featured-playlists") => {
     const domain = "https://api.spotify.com/v1/browse";
@@ -53,20 +52,40 @@ const App = () => {
     return axios(config);
   };
 
-  console.log(spotifyAccessToken);
-  console.log(playlists);
-  return (
-    <main className="container">
-      <section id="filter"></section>
-      <section id="playlists">
-        <div className="playlist">
+  const displayPlaylists = () =>
+    filteredByName.map(playlist => {
+      const { url } = playlist.images[0];
+      const { name, id } = playlist;
+
+      return (
+        <div className="playlist" key={id}>
           <img
-            src="https://i.scdn.co/image/ab67706f00000003278197087524cc094f86e82b"
-            alt="Playlist Cover"
+            src={url}
             width="50"
+            alt="Playlist Cover"
+            className="playlist__cover"
           />
-          <p>Name</p>
+          <p className="playlist__name">{name}</p>
         </div>
+      );
+    });
+
+  return (
+    <main>
+      <section id="filters">
+        <div>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="search by name..."
+          />
+        </div>
+      </section>
+      <section id="playlists">
+        {playlists.length > 0 ? displayPlaylists() : "Fetching playlists"}
       </section>
     </main>
   );
