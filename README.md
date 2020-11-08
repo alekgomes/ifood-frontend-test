@@ -19,7 +19,7 @@ Create a web application called Spotifood used to display the preferred playlist
 
 We will use one API from Spotify Web API. You should follow the Spotify guide in order to create a token needed to access Spotify's API.
 To mount the API filter fields on the filter component, you **must** consume the API that provides the metadata about the fields (Link 1).
-You could use Material UI, Bootstrap or any other toolkit to accelerate your resolution. We will not provide any UI prototype or design.
+oYou culd use Material UI, Bootstrap or any other toolkit to accelerate your resolution. We will not provide any UI prototype or design.
 
 ## Non functional requirements
 

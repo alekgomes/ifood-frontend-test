@@ -8,6 +8,10 @@ const fetchApiFilters = () => {
     url,
   };
 
+  // return new Promise((resolve, reject) => {
+  //   return resolve(filters);
+  // });
+
   return axios(config);
 };
 
