@@ -13,7 +13,6 @@ const App = () => {
   const [filters, setFilters] = useState({});
   const [search, setSearch] = useState("");
   const [filteredByName, setFilteredByName] = useState([]);
-  const [uri, setUri] = useState("featured-playlists");
   const [queryParams, setQueryParams] = useState({
     locale: "en_AU",
     country: "BR",
@@ -89,7 +88,7 @@ const App = () => {
 
   const concatParam = () => {
     const { locale, country, timestamp, limit, offset } = queryParams;
-    const newUri = `${uri}?locale=${locale}&country=${country}&timestamp=${timestamp}&limit=${limit}&offset=${offset}`;
+    const newUri = `featured-playlists?locale=${locale}&country=${country}&timestamp=${timestamp}&limit=${limit}&offset=${offset}`;
     return newUri;
   };
 
@@ -99,7 +98,7 @@ const App = () => {
       <input
         type="date"
         onChange={e =>
-          concatParam(
+          handleClick(
             moment(
               e.target.value,
               filters.timestamp.validation.pattern
@@ -116,8 +115,6 @@ const App = () => {
     newObj[id] = value;
 
     setQueryParams(newObj);
-
-    // concatParam();
   };
 
   const filterSelect = filterObj => {
@@ -148,12 +145,22 @@ const App = () => {
     );
   };
 
+  const clearFilters = () => {
+    setQueryParams({
+      locale: "en_AU",
+      country: "BR",
+      timestamp: "2014-10-23T02:00:00.000Z",
+      limit: 20,
+      offset: 0,
+    });
+  };
+
   return (
     <main>
       <section id="filters">
         {filterSelect(filters.country)}
         {filterSelect(filters.locale)}
-        {/* {filterTimestamp(filters.timestamp)} */}
+        {filterTimestamp(filters.timestamp)}
         <div>
           <input
             type="text"
@@ -164,7 +171,7 @@ const App = () => {
             placeholder="search by name..."
           />
         </div>
-        <h1>{uri}</h1>
+        <button onClick={() => clearFilters()}>Clear filters</button>
       </section>
       <section id="playlists">
         {playlists.length > 0 ? displayPlaylists() : "Fetching playlists"}
