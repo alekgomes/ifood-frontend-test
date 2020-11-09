@@ -94,27 +94,56 @@ const App = () => {
 
   const filterTimestamp = filterObj => {
     if (!filterObj) return;
+    const { id, name } = filterObj;
     return (
-      <input
-        type="date"
-        onChange={e =>
-          handleClick(
-            moment(
-              e.target.value,
-              filters.timestamp.validation.pattern
-            ).toISOString(),
-            filterObj.id
-          )
-        }
-      />
+      <>
+        <label htmlFor={id}>
+          <span>{name}</span>
+          <input
+            name={id}
+            type="date"
+            id={id}
+            onChange={e =>
+              handleClick(
+                moment(
+                  e.target.value,
+                  filters.timestamp.validation.pattern
+                ).toISOString(),
+                id
+              )
+            }
+          />
+        </label>
+      </>
     );
   };
 
   const handleClick = (value, id) => {
     const newObj = { ...queryParams };
+    if (value === "en_US") value = "US";
     newObj[id] = value;
 
     setQueryParams(newObj);
+  };
+
+  const filterInput = (filterObj, type = "number") => {
+    if (!filterObj) return;
+    const { id, name } = filterObj;
+
+    return (
+      <label htmlFor={id}>
+        <span>{name}</span>
+        <input
+          type={type}
+          name={id}
+          id={id}
+          value={queryParams[id]}
+          min={filterObj.validation.min || ""}
+          max={filterObj.validation.max || ""}
+          onChange={e => handleClick(e.target.value, id)}
+        />
+      </label>
+    );
   };
 
   const filterSelect = filterObj => {
@@ -135,6 +164,7 @@ const App = () => {
                 }}
                 key={`${val.value}+${val.name}`}
                 selected={val.value === queryParams[id]}
+                defaultValue={val.value === queryParams[id]}
               >
                 {val.name}
               </option>
@@ -161,6 +191,8 @@ const App = () => {
         {filterSelect(filters.country)}
         {filterSelect(filters.locale)}
         {filterTimestamp(filters.timestamp)}
+        {filterInput(filters.limit)}
+        {filterInput(filters.offset)}
         <div>
           <input
             type="text"

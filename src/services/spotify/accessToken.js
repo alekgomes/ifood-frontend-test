@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const fetchSpotifyAccessToken = () => {
-  const client_id = "1dc68d9df5d5462d86454ec32ba81774";
-  const client_secret = "04fc9360ff664605857ce385a4c4dea8";
+  const client_id = process.env.CLIENT_ID;
+  const client_secret = process.env.CLIENT_SECRET;
   const hash = btoa(`${client_id}:${client_secret}`);
 
   const params = new URLSearchParams();
