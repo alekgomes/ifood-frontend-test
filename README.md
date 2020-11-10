@@ -1,29 +1,36 @@
-# iFood Frontend Test
+# Spotifood
+This application contains 2 major components:
+  A Filter built from iFood's API
+  A List of featured playlists fetched from Spotify using the Filter component's values as query
 
-Create a web application called Spotifood used to display the preferred playlists from iFood's customers. The web application has only one page:
-* A page that lists the featured playlists at Spotify according to some criteria.
+![img-2](./images/2020-11-10-11-32-47.png)
 
-## Business rules
+The iFood API provided a lot of filter options and build the Filter component with all of it would make the UI crowded.
+The solution was keeping the most important filter visible and hide the others inside a modal, accessible by a "More filters" button
 
-* The page is composed of two components:
-    * One list of featured playlists
-    * One filter component with API filter fields and one local search text input to filter the playlists by "name".
-    
-* The filter component should be used to filter the elements displayed by the list of featured playlists.
-* The API filter fields and their possible values/type should be mounted by consuming this API **[1. Playlists Filters]** (http://www.mocky.io/v2/5a25fade2e0000213aa90776)
-* The featured playlists to be displayed should be consumed from this API **[2. See the documentation from Spotify]** (https://developer.spotify.com/web-api/get-list-featured-playlists/)
-* Every time the user change any information on the filter component, the list should be refresh accordingly. In case of API filter field change you should recall the playlists API with the filter parameters every time.
-* Considering that we live in a chaotic and fast-changing world, the page should refresh its content every 30 seconds, to see if any information from the Spotify APIs had been changed.
+## General
+The state is all contained inside App.js and those are:
+    spotifyAccessToken - Uses CLIENT_ID and CLIENT_SECRET to fetch token wich is used to fetch playlists
+    playlists - Return of fetchFeaturedPlaylist(queryParams) and is a fetch in Spotify API
+    filters - Return of fetchApiFilters() and is a fetch to the iFood's API
+    search - Value used to search playlist by name
+    filteredByName - Playlists filtered by name
+    queryParams - Built from *filters*, provided to user to change and used as params for playlit fetching
 
-## Hints or Constraints
+The autheticazion is made via token by the Spotify
 
-We will use one API from Spotify Web API. You should follow the Spotify guide in order to create a token needed to access Spotify's API.
-To mount the API filter fields on the filter component, you **must** consume the API that provides the metadata about the fields (Link 1).
-oYou culd use Material UI, Bootstrap or any other toolkit to accelerate your resolution. We will not provide any UI prototype or design.
+## Further improvements
+Use the React's native contextApi to control the application's state and avoid prop drilling
+Make a better UI
 
-## Non functional requirements
+Due lack of time, those improvements were not possible
 
-As this application will be a worldwide success, it must be prepared to be accessible, responsive, fault tolerant and resilient.
-We **strongly recommend** using React to build the application.
-Also, briefly elaborate on your solution architecture details, choice of patterns and frameworks.
-Fork this repository and submit your code.
+## Runing the project
+Clone this repositore
+*Make sure you are at the branch alekgomes/frontend-test*
+Create a ```.env``` file with your Spotify's CLIENT_ID and CLIENT_SECRET (use .env.exemple as exemple)
+Use the ```npm install``` command
+Use the ```npm run dev``` command
+Go to localhost:1234
+
+OBS.: I've sent this app CLIENT_ID and CLIENT_SECRET along the email 
