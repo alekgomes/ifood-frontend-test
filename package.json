@@ -24,9 +24,11 @@
   "homepage": "https://github.com/alekgomes/ifood-frontend-test#readme",
   "dependencies": {
     "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
     "dotenv": "^8.2.0",
     "moment": "^2.29.1",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
     "react-datetime": "^3.0.4",
     "react-dom": "^17.0.1"
   },
