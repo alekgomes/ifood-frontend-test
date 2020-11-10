@@ -1,7 +1,8 @@
 # Spotifood
 This application contains 2 major components:
-  A Filter built from iFood's API
-  A List of featured playlists fetched from Spotify using the Filter component's values as query
+ - A Filter built from iFood's API
+ 
+ - A List of featured playlists fetched from Spotify using the Filter component's values as query
 
 ![img-2](./images/2020-11-10-11-32-47.png)
 
