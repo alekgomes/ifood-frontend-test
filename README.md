@@ -12,7 +12,7 @@ The solution was keeping the most important filter visible and hide the others i
 ## General
 The state is all contained inside App.js and those are:
 
-- **spotifyAccessToken** - Uses CLIENT_ID and CLIENT_SECRET to fetch token wich is used to fetch playlists
+- **spotifyAccessToken** - Uses CLIENT_ID and CLIENT_SECRET to fetch token which is used to fetch playlists
 
 - **playlists** - Return of fetchFeaturedPlaylist(queryParams) and is a fetch in Spotify API
 
@@ -22,26 +22,26 @@ The state is all contained inside App.js and those are:
 
 - **filteredByName** - Playlists filtered by name
 
-- **queryParams** - Built from *filters*, provided to user to change and used as params for playlit fetching
+- **queryParams** - Built from *filters*, provided to user to change and used as params for playlist fetching
 
 The autheticazion is made via token by the Spotify
 
 ## Further improvements
-Use the React's native contextApi to control the application's state and avoid prop drilling
-Make a better UI
+- Use the React's native contextApi to control the application's state and avoid prop drilling
+- Make a better UI
 
 Due lack of time, those improvements were not possible
 
 ## Runing the project
-Clone this repositore
+Clone this repository
 
 *Make sure you are at the branch alekgomes/frontend-test*
 
-Create a ```.env``` file with your Spotify's CLIENT_ID and CLIENT_SECRET (use .env.exemple as exemple)
+Create a ```.env``` file with your Spotify's CLIENT_ID and CLIENT_SECRET (use .env.exemple as example)
 
-Use the ```npm install``` command
+Run ```npm install``` command
 
-Use the ```npm run dev``` command
+Run ```npm run dev``` command
 
 Go to localhost:1234
 
